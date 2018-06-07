@@ -68,22 +68,21 @@ The ``-d`` flag will accept all defaults.
   		git flow support start <release> <base>
 
 
-# sub tree
+# Submodule
 
-* All the  generic modules are which needs to be edited are sub tree.
+* All the  generic modules are which needs to be edited are submodule.
   For example, the helpers module in the modana is the sub tree
 
-sub-tress: modana/helpers
-* To init - ./sub_version.sh init
-* To pull - ./sub_version.sh pull
-* For pull request - ./sub_version.sh push
+* sub-tress: modana/helpers
+
+* To update the submodule
+  git submodule update --remote
 
 Note: if u change the subtree and dont make a pull request it wont be reflected in the production mode.
 So u need to make a pull request
 
-# Submodules
 
-* All the protos directory will be a sub module instead of sub tree
+
 
 
 
