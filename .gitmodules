@@ -1,0 +1,3 @@
+[submodule "modana/helpers"]
+	path = modana/helpers
+	url = git@gitlab.com:Rosebay/fintech_helpers.git
