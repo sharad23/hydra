@@ -18,26 +18,6 @@ from django.contrib.contenttypes.fields import (
 )
 
 
-class CompanyProfile(BaseModel):
-    user = GenericRelation(
-        User,
-        on_delete=models.SET_NULL,
-        related_query_name="user_profiles",
-        content_type_field='profile_ct',
-        object_id_field='profile_id',
-    )
-
-
-class EmployeeProfile(BaseModel):
-    user = GenericRelation(
-        User,
-        on_delete=models.SET_NULL,
-        related_query_name="user_profiles",
-        content_type_field='profile_ct',
-        object_id_field='profile_id',
-    )
-
-
 class UserManager(BaseUserManager):
     def create_user(self, email, username, phone_number, password):
         """
@@ -80,7 +60,7 @@ class UserManager(BaseUserManager):
 
     def create_admin(self, **kwargs):
         user = self.create_user(**kwargs)
-        user.is_super_admin = True
+        user.is_superuser = True
         user.save()
         return user
 
@@ -93,7 +73,6 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         unique=True,
     )
     phone_number = models.IntegerField(unique=True)
-    is_active = models.BooleanField(default=False)
     roles = models.ManyToManyField(Role, related_name='users')
     profile_ct = models.ForeignKey(
         ContentType,
@@ -107,10 +86,29 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         upload_to='profile_pics/',
         null=True, blank=True,
     )
-    is_super_admin = models.BooleanField(default=False)
     objects = UserManager()
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email', 'phone_number']
 
     def __str__(self):
         return self.email
+
+
+class CompanyProfile(BaseModel):
+    user = GenericRelation(
+        User,
+        on_delete=models.SET_NULL,
+        related_query_name="user_profiles",
+        content_type_field='profile_ct',
+        object_id_field='profile_id',
+    )
+
+
+class EmployeeProfile(BaseModel):
+    user = GenericRelation(
+        User,
+        on_delete=models.SET_NULL,
+        related_query_name="user_profiles",
+        content_type_field='profile_ct',
+        object_id_field='profile_id',
+    )

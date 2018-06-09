@@ -6,6 +6,7 @@ class Permission(BaseModel):
     name = models.CharField(max_length=50)
     url = models.CharField(max_length=50)
     method = models.CharField(max_length=50)
+    app_label = models.CharField(max_length=100, null=True, blank=True)
     description = models.CharField(max_length=500, blank=True)
 
     class Meta:
@@ -19,6 +20,7 @@ class Role(BaseModel):
     name = models.CharField(max_length=50, unique=True)
     parent = models.ForeignKey(
         "self",
+        on_delete=models.SET_NULL,
         null=True,
         blank=True
     )
